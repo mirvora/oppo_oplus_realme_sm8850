@@ -15,7 +15,7 @@ on:
         description: 'KernelSU分支(ReSukiSU/SukiSU Ultra/KernelSU Next/KSU(原版)/无内置KSU,默认ReSukiSU)'
         required: true
         type: choice
-        default: 'ksunext'
+        default: 'resukisu'
         options:
           - 'resukisu'
           - 'sukisu'
@@ -77,7 +77,7 @@ on:
         default: 'false'
       baseband_guard:
         description: '是否开启内核级基带保护(阻止一切对非用户分区的写入，有效防止格机)'
-        required: false
+        required: true
         type: boolean
         default: 'false'
       ccache_update:
@@ -93,7 +93,7 @@ on:
       kernel_suffix:
         description: '内核后缀(留空默认,开头别加连字符,勿加空格等影响指令运行的保留字符)'
         required: true
-        type: telegram@mirvora
+        type: -mirvora
         default: ''
 
 jobs:
@@ -258,7 +258,7 @@ jobs:
           if [[ ${{ github.event.inputs.ksu_type }} == "sukisu" || ${{ github.event.inputs.ksu_type }} == "resukisu" ]]; then
             echo "正在配置ReSukiSU（由于SukiSU长期未维护无法正常编译，且ReSukiSU兼容sukisu管理器，故SukiSU源码仓库已重定向为resukisu）..."
             curl -LSs "https://raw.githubusercontent.com/ReSukiSU/ReSukiSU/refs/heads/main/kernel/setup.sh" | bash -s main
-            echo 'CONFIG_KSU_FULL_NAME_FORMAT="%TAG_NAME%-%COMMIT_SHA%telegram@mirvora"' >> ./common/arch/arm64/configs/gki_defconfig
+            echo 'CONFIG_KSU_FULL_NAME_FORMAT="%TAG_NAME%-%COMMIT_SHA%-mirvora@telegram"' >> ./common/arch/arm64/configs/gki_defconfig
             cd ./KernelSU
             # 生成自定义版本号（基于提交计数）, 失败时使用 114514
             KSU_VERSION=$(expr $(git rev-list --count main) + 30700 2>/dev/null || echo 114514)
