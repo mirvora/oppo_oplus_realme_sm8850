@@ -93,7 +93,7 @@ on:
       kernel_suffix:
         description: '内核后缀(留空默认,开头别加连字符,勿加空格等影响指令运行的保留字符)'
         required: true
-        type: -mirvora
+        type: mirvora
         default: ''
 
 jobs:
