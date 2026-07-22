@@ -69,7 +69,7 @@ on:
         description: '是否启用ADIOS IO调度器支持(提升IO读写性能)'
         required: true
         type: boolean
-        default: 'true'
+        default: 'false'
       rekernel_enable:
         description: '是否启用Re-Kernel支持(与Freezer/NoActive等软件配合, 提升应用冻结能力)'
         required: true
